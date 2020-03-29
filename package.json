@@ -1,0 +1,39 @@
+{
+  "name": "remark-embedded-code-snippets",
+  "description": "Remark plugin for embedding code snippets from github permalinks.",
+  "version": "0.0.0",
+  "private": true,
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "types",
+  "scripts": {
+    "lint": "web-scripts lint",
+    "test": "web-scripts test --ci",
+    "prebuild": "rm -rf cjs esm types",
+    "build": "web-scripts build",
+    "commit": "web-scripts commit",
+    "prerelease": "yarn build && yarn test",
+    "release": "web-scripts release",
+    "prepare": "web-scripts audit"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "web-scripts commitmsg",
+      "pre-commit": "web-scripts precommit"
+    }
+  },
+  "devDependencies": {
+    "@jomaxx/jest-polly": "^1.0.1",
+    "@spotify/web-scripts": "^6.1.0",
+    "@types/node-fetch": "^2.5.5",
+    "husky": "^4.0.0",
+    "remark": "^11.0.2"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "unist-util-visit": "^2.0.2"
+  },
+  "license": "MIT",
+  "author": "Jo Maxx Blake <jo.maxx.blake@gmail.com>",
+  "repository": "git@github.com:jomaxx/remark-embedded-code-snippets.git"
+}
