@@ -5,6 +5,11 @@
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "types",
+  "files": [
+    "cjs",
+    "esm",
+    "types"
+  ],
   "scripts": {
     "lint": "web-scripts lint",
     "test": "web-scripts test --ci",
