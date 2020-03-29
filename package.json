@@ -2,7 +2,6 @@
   "name": "remark-embedded-code-snippets",
   "description": "Remark plugin for embedding code snippets from github permalinks.",
   "version": "0.0.0",
-  "private": true,
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "types",
