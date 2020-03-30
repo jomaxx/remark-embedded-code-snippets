@@ -26,11 +26,11 @@ remark()
 #### Input
 
 ```markdown
-![javascript](https://github.com/jomaxx/remark-embedded-code-snippets/blob/78d8ec567422a9776beb2d48dd826189aed58267/prettier.config.js#L1)
+![](https://github.com/jomaxx/remark-embedded-code-snippets/blob/78d8ec567422a9776beb2d48dd826189aed58267/prettier.config.js#L1)
 ```
 
 #### Output
 
-```javascript
+```js
 module.exports = require('@spotify/web-scripts/config/prettier.config.js');
 ```

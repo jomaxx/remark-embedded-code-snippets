@@ -1,4 +1,5 @@
 import visit from 'unist-util-visit';
+import { extname } from 'path';
 import { createApi } from './github';
 import { matchPermalink } from './matchPermalink';
 import { Context } from './types';
@@ -28,7 +29,7 @@ export function githubPermalinksPlugin({
 
       const [image] = paragraph.children;
 
-      if (image.type !== 'image') {
+      if (image.type !== 'image' || image.alt) {
         return;
       }
 
@@ -41,7 +42,7 @@ export function githubPermalinksPlugin({
 
             parent.children.splice(parent.children.indexOf(paragraph), 1, {
               type: 'code',
-              lang: image.alt || undefined,
+              lang: image.title || extname(match.path).slice(1),
               value: content
                 .split('\n')
                 .slice(match.firstLineIndex, match.numOfLines)
