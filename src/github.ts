@@ -1,22 +1,32 @@
 import fetch, { Request } from 'node-fetch';
+import memoize from 'lodash.memoize';
 import { Context, Match } from './types';
 
-export async function getContent(
-  { owner, repo, path, ref }: Match,
-  { githubApi, username, token }: Context,
-) {
-  const endpoint = `${githubApi}/repos/${owner}/${repo}/contents/${path}?ref=${ref}`;
-  const request = new Request(endpoint);
+export function createApi({ githubApi, username, token }: Context) {
+  const credentials =
+    username && Buffer.from(`${username}:${token}`).toString('base64');
 
-  if (username) {
-    const credentials = Buffer.from(`${username}:${token}`).toString('base64');
-    request.headers.set('Authorization', `Basic ${credentials}`);
+  const getJSON = memoize(async (path: string) => {
+    const request = new Request(`${githubApi}${path}`);
+
+    if (credentials) {
+      request.headers.set('Authorization', `Basic ${credentials}`);
+    }
+
+    const response = await fetch(request);
+    const data = await response.json();
+    const { ok } = response;
+
+    return { ok, data };
+  });
+
+  async function getContent({ owner, repo, path, ref }: Match) {
+    const endpoint = `/repos/${owner}/${repo}/contents/${path}?ref=${ref}`;
+    const { ok, data } = await getJSON(endpoint);
+    return ok
+      ? Buffer.from(data.content, 'base64').toString()
+      : `GitHubError: ${data.message}`;
   }
 
-  const response = await fetch(request);
-  const json = await response.json();
-
-  return response.ok
-    ? Buffer.from(json.content, 'base64').toString()
-    : `GitHubError: ${json.message}`;
+  return { getContent };
 }

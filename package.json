@@ -29,11 +29,13 @@
   "devDependencies": {
     "@jomaxx/jest-polly": "^1.0.1",
     "@spotify/web-scripts": "^6.1.0",
+    "@types/lodash.memoize": "^4.1.6",
     "@types/node-fetch": "^2.5.5",
     "husky": "^4.0.0",
     "remark": "^11.0.2"
   },
   "dependencies": {
+    "lodash.memoize": "^4.1.2",
     "node-fetch": "^2.6.0",
     "unist-util-visit": "^2.0.2"
   },
