@@ -20,13 +20,24 @@ export function createApi({ githubApi, username, token }: Context) {
     return { ok, data };
   });
 
-  async function getContent({ owner, repo, path, ref }: Match) {
+  async function getSnippet({
+    owner,
+    repo,
+    path,
+    ref,
+    firstLineIndex,
+    numOfLines,
+  }: Match) {
     const endpoint = `/repos/${owner}/${repo}/contents/${path}?ref=${ref}`;
     const { ok, data } = await getJSON(endpoint);
     return ok
-      ? Buffer.from(data.content, 'base64').toString()
+      ? Buffer.from(data.content, 'base64')
+          .toString()
+          .split('\n')
+          .slice(firstLineIndex, numOfLines)
+          .join('\n')
       : `GitHubError: ${data.message}`;
   }
 
-  return { getContent };
+  return { getSnippet };
 }

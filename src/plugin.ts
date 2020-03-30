@@ -17,7 +17,7 @@ export function githubPermalinksPlugin({
     token,
   };
 
-  const { getContent } = createApi(context);
+  const { getSnippet } = createApi(context);
 
   return async function transformer(tree: any) {
     const promises: Promise<any>[] = [];
@@ -38,15 +38,10 @@ export function githubPermalinksPlugin({
           const match = matchPermalink(image.url, context);
 
           if (match) {
-            const content = await getContent(match);
-
             parent.children.splice(parent.children.indexOf(paragraph), 1, {
               type: 'code',
               lang: image.title || extname(match.path).slice(1),
-              value: content
-                .split('\n')
-                .slice(match.firstLineIndex, match.numOfLines)
-                .join('\n'),
+              value: await getSnippet(match),
             });
           }
         })(),
