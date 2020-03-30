@@ -34,7 +34,7 @@ export function createApi({ githubApi, username, token }: Context) {
       ? Buffer.from(data.content, 'base64')
           .toString()
           .split('\n')
-          .slice(firstLineIndex, numOfLines)
+          .slice(firstLineIndex, firstLineIndex + numOfLines)
           .join('\n')
       : `GitHubError: ${data.message}`;
   }
